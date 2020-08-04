@@ -15,7 +15,7 @@ import static account.domain.AddressType.SHIPPING;
 import static account.domain.CreditCardType.MASTERCARD;
 
 @SpringBootTest(classes = AccountApplication.class)
-class CustomerTest {
+class AccountTest {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -25,7 +25,7 @@ class CustomerTest {
     void customerTest() throws Exception {
         //given
         Account account = new Account("12345");
-        Customer customer = new Customer("Dong-Gil", "Nam", "ndgndg91@gmail.com", account);
+       Customer customer = new Customer("Dong-Gil", "Nam", "ndgndg91@gmail.com", account);
         CreditCard creditCard = new CreditCard("5388032306460084", MASTERCARD);
         customer.getAccount().getCreditCards().add(creditCard);
 

@@ -8,5 +8,5 @@
  */
 
 rootProject.name = 'commerce'
-include('customer-service')
+include('account-service')
 include('order-service')

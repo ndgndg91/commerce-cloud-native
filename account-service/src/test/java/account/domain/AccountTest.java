@@ -1,21 +1,21 @@
-package account;
+package account.domain;
 
-import account.domain.Account;
-import account.domain.Address;
-import account.domain.CreditCard;
+import static account.domain.address.AddressType.SHIPPING;
+
+import account.AccountApplication;
+import account.domain.creditcard.CreditCard;
+import account.domain.creditcard.CreditCardType;
 import account.domain.customer.Customer;
 import account.domain.customer.CustomerRepository;
+import account.domain.address.Address;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static account.domain.AddressType.SHIPPING;
-import static account.domain.CreditCardType.MASTERCARD;
-
 @SpringBootTest(classes = AccountApplication.class)
-class AccountTest {
+public class AccountTest {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -25,8 +25,8 @@ class AccountTest {
     void customerTest() throws Exception {
         //given
         Account account = new Account("12345");
-       Customer customer = new Customer("Dong-Gil", "Nam", "ndgndg91@gmail.com", account);
-        CreditCard creditCard = new CreditCard("5388032306460084", MASTERCARD);
+        Customer customer = new Customer("Dong-Gil", "Nam", "ndgndg91@gmail.com", account);
+        CreditCard creditCard = new CreditCard("5388032306460084", CreditCardType.MASTERCARD);
         customer.getAccount().getCreditCards().add(creditCard);
 
         String street1 = "235, Toegye-ro, Jung-gu, Seoul, Republic of Korea";
@@ -41,11 +41,11 @@ class AccountTest {
         //then
         Assertions.assertThat(persistedResult).isNotNull();
         boolean exist = persistedResult.getAccount().getAddresses()
-                .stream()
-                .anyMatch(add -> add.getStreet1().equalsIgnoreCase(street1));
+            .stream()
+            .anyMatch(add -> add.getStreet1().equalsIgnoreCase(street1));
         Assertions.assertThat(exist).isTrue();
 
         customerRepository.findByEmailContaining(customer.getEmail())
-                .orElseThrow(() -> new RuntimeException("there is supposed to be a matching record!"));
-     }
+            .orElseThrow(() -> new RuntimeException("there is supposed to be a matching record!"));
+    }
 }

@@ -2,13 +2,13 @@ package account.domain.customer;
 
 
 import account.domain.Account;
-import account.domain.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Objects;
+import mysql.BaseEntity;
 
 @Getter
 @Entity

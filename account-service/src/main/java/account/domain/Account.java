@@ -1,12 +1,14 @@
 package account.domain;
 
-import account.domain.base.BaseEntity;
+import account.domain.creditcard.CreditCard;
+import account.domain.address.Address;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import mysql.BaseEntity;
 
 @Getter
 @Entity

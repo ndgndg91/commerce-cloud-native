@@ -1,10 +1,10 @@
-package account.domain;
+package account.domain.address;
 
-import account.domain.base.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
+import mysql.BaseEntity;
 
 @Getter
 @Entity

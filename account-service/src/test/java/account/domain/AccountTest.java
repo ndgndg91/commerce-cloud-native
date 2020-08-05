@@ -15,14 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = AccountApplication.class)
-public class AccountTest {
+class AccountTest {
 
     @Autowired
     private CustomerRepository customerRepository;
 
     @Test
     @DisplayName("고객_추가")
-    void customerTest() throws Exception {
+    void customerTest() {
         //given
         Account account = new Account("12345");
         Customer customer = new Customer("Dong-Gil", "Nam", "ndgndg91@gmail.com", account);

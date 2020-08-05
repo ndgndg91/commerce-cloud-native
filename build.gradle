@@ -36,14 +36,9 @@ project(":core-module") {
     jar.enabled = true
 
     dependencies {
+        compile group: 'joda-time', name: 'joda-time', version: '2.10.6'
+
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        compileOnly 'org.projectlombok:lombok'
-        developmentOnly 'org.springframework.boot:spring-boot-devtools'
-        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-        annotationProcessor 'org.projectlombok:lombok'
-        runtimeOnly 'mysql:mysql-connector-java'
-        runtimeOnly 'com.h2database:h2'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
@@ -60,10 +55,8 @@ project(":account-service") {
 
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-web'
-        compileOnly 'org.projectlombok:lombok'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-        annotationProcessor 'org.projectlombok:lombok'
         runtimeOnly 'mysql:mysql-connector-java'
         runtimeOnly 'com.h2database:h2'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -84,13 +77,13 @@ project(":order-service") {
 
     dependencies {
         compile project(":core-module")
+        compile project(":account-service")
 
+        implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-web'
-        compileOnly 'org.projectlombok:lombok'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-        annotationProcessor 'org.projectlombok:lombok'
         runtimeOnly 'mysql:mysql-connector-java'
         runtimeOnly 'com.h2database:h2'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {

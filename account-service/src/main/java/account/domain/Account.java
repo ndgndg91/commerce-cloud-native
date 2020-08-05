@@ -2,7 +2,6 @@ package account.domain;
 
 import account.domain.creditcard.CreditCard;
 import account.domain.address.Address;
-import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,10 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 import mysql.BaseEntity;
 
-@Getter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Account extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accountIdGen")
@@ -32,11 +28,20 @@ public class Account extends BaseEntity {
         this.accountNumber = accountNumber;
     }
 
+    public Account() {
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         Account account = (Account) o;
         return id == account.id;
     }
@@ -44,5 +49,21 @@ public class Account extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public Set<CreditCard> getCreditCards() {
+        return creditCards;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 }

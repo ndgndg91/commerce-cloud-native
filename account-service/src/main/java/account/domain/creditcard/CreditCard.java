@@ -1,15 +1,10 @@
 package account.domain.creditcard;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.Objects;
 import mysql.BaseEntity;
 
-@Getter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class CreditCard extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "creditCardIdGen")
@@ -26,11 +21,20 @@ public class CreditCard extends BaseEntity {
         this.creditCardType = type;
     }
 
+    public CreditCard() {
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         CreditCard that = (CreditCard) o;
         return id == that.id;
     }
@@ -38,5 +42,17 @@ public class CreditCard extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public CreditCardType getCreditCardType() {
+        return creditCardType;
     }
 }

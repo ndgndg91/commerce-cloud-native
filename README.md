@@ -1,10 +1,10 @@
 # commerce-cloud-native
 Gradle multi module e-commerce project
 
-- core-module
+- core-module (audit)
 - account-service
 - order-service
-- product-service
+- product-service (event sourcing)
 
 1. web
 2. jpa - mysql, mongodb

@@ -7,7 +7,9 @@ Gradle multi module e-commerce project
 - product-service (event sourcing)
 
 1. web
-2. jpa - mysql, mongodb
-3. joda-time
-4. junit5
-5. axon framework
+2. web-flux
+3. jpa - mysql, mongodb, h2
+4. joda-time
+5. junit5
+6. axon framework
+7. kotlin

@@ -10,7 +10,6 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import product.api.ProductCreateCommand;
 import product.api.ProductCreatedEvent;
 import product.api.ProductDeleteCommand;
@@ -20,7 +19,6 @@ import product.api.ProductStatusChangeCommand;
 import product.api.ProductStatusChangedEvent;
 
 @Aggregate
-@Profile("command")
 public class Product {
 
     private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());

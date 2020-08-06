@@ -1,18 +1,21 @@
 package product.query;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.queryhandling.QueryHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import product.api.FetchProductsQuery;
 import product.api.ProductCreatedEvent;
 import product.api.ProductStatusChangedEvent;
 import product.api.ProductSummary;
 
 @Component
-@Profile("query")
 public class ProductProjection {
 
     private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -26,10 +29,6 @@ public class ProductProjection {
     @EventHandler
     public void on(ProductCreatedEvent event) {
         log.trace("projecting {}", event);
-        /*
-         * Update our read model by inserting the new card. This is done so that upcoming regular
-         * (non-subscription) queries get correct data.
-         */
         entityManager
             .persist(new ProductSummary(event.getId(), event.getName(), event.getPrice(), event.getStatus().name()));
     }
@@ -37,11 +36,16 @@ public class ProductProjection {
     @EventHandler
     public void on(ProductStatusChangedEvent event) {
         log.trace("projecting {}", event);
-        /*
-         * Update our read model by updating the existing card. This is done so that upcoming regular
-         * (non-subscription) queries get correct data.
-         */
         ProductSummary summary = entityManager.find(ProductSummary.class, event.getId());
         summary.setStatus(event.getStatus().name());
+    }
+
+    @QueryHandler
+    public List<ProductSummary> handle(FetchProductsQuery query) {
+        log.trace("handling {}", query);
+        TypedQuery<ProductSummary> jpaQuery = entityManager.createNamedQuery("ProductSummary.fetch", ProductSummary.class);
+        jpaQuery.setFirstResult(query.getOffset());
+        jpaQuery.setMaxResults(query.getLimit());
+        return jpaQuery.getResultList();
     }
 }

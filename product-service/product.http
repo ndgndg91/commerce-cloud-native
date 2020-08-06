@@ -1,0 +1,23 @@
+POST http://127.0.0.1:8080/products
+Content-Type: application/json
+
+{
+  "id": "1",
+  "name": "T-Shirts",
+  "price": "10.99",
+  "status": "PUBLIC"
+}
+
+###
+
+GET http://127.0.0.1:8080/products?offset=0&limit=5
+
+###
+
+PUT http://127.0.0.1:8080/products
+Content-Type: application/json
+
+{
+  "id": "1",
+  "status": "PRIVATE"
+}

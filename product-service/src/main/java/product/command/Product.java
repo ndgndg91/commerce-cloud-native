@@ -56,6 +56,7 @@ public class Product {
         if (log.isDebugEnabled()) {
             log.debug("ProductCreatedEvent {}", evt);
         }
+
         id = evt.getId();
         name = evt.getName();
         price = evt.getPrice();

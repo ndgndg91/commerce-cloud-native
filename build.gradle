@@ -101,6 +101,7 @@ project(":order-service") {
     dependencies {
         compile project(":core-module")
 
+        implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-webflux'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

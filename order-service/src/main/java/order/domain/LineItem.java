@@ -1,4 +1,6 @@
-package order.domain.order;
+package order.domain;
+
+import java.util.StringJoiner;
 
 public class LineItem {
 
@@ -34,5 +36,16 @@ public class LineItem {
 
     public Double getTax() {
         return tax;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", LineItem.class.getSimpleName() + "[", "]")
+                .add("name='" + name + "'")
+                .add("productId='" + productId + "'")
+                .add("quantity=" + quantity)
+                .add("price=" + price)
+                .add("tax=" + tax)
+                .toString();
     }
 }

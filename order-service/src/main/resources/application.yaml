@@ -4,3 +4,6 @@ spring:
       host: localhost
       port: 27017
       database: commerce
+
+server:
+  port: 2020

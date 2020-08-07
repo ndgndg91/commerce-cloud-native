@@ -1,4 +1,4 @@
-package order.domain.order;
+package order.domain;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

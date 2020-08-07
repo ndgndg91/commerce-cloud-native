@@ -1,18 +1,9 @@
 package order.domain;
 
-import static account.domain.address.AddressType.SHIPPING;
-
-import account.domain.Account;
-import account.domain.address.Address;
-import account.domain.creditcard.CreditCard;
-import account.domain.creditcard.CreditCardType;
-import account.domain.customer.Customer;
 import order.OrderApplication;
+import order.domain.account.*;
 import order.domain.invoice.Invoice;
 import order.domain.invoice.InvoiceRepository;
-import order.domain.order.LineItem;
-import order.domain.order.Order;
-import order.domain.order.OrderRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,6 +12,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static order.domain.account.AddressType.SHIPPING;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest(classes = OrderApplication.class)

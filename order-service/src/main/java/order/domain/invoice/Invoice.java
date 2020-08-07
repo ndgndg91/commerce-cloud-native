@@ -1,13 +1,14 @@
 package order.domain.invoice;
 
-import account.domain.address.Address;
-import account.domain.address.AddressType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.UUID;
 import javax.persistence.Id;
 import mongo.BaseEntity;
-import order.domain.order.Order;
+import order.domain.account.Address;
+import order.domain.account.AddressType;
+import order.domain.Order;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -80,5 +81,16 @@ public class Invoice extends BaseEntity {
 
     public InvoiceStatus getInvoiceStatus() {
         return invoiceStatus;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Invoice.class.getSimpleName() + "[", "]")
+                .add("invoiceId='" + invoiceId + "'")
+                .add("customerId='" + customerId + "'")
+                .add("orders=" + orders)
+                .add("billingAddress=" + billingAddress)
+                .add("invoiceStatus=" + invoiceStatus)
+                .toString();
     }
 }

@@ -1,4 +1,4 @@
-package order.domain.order;
+package order.domain;
 
 public enum OrderStatus {
     PENDING, CONFIRMED, SHIPPED, DELIVERED

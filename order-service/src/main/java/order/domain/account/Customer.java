@@ -1,17 +1,9 @@
-package account.domain.customer;
+package order.domain.account;
 
-
-import account.domain.Account;
-import mysql.BaseEntity;
-
-import javax.persistence.*;
 import java.util.Objects;
+import java.util.StringJoiner;
 
-@Entity
-public class Customer extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customerIdGen")
-    @SequenceGenerator(name = "customerIdGen", sequenceName = "CUSTOMER_ID_SEQ", allocationSize = 25)
+public class Customer {
     private long id;
 
     private String firstName;
@@ -20,7 +12,6 @@ public class Customer extends BaseEntity {
 
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
     private Account account;
 
     public Customer() {
@@ -69,5 +60,16 @@ public class Customer extends BaseEntity {
 
     public Account getAccount() {
         return account;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Customer.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("firstName='" + firstName + "'")
+                .add("lastName='" + lastName + "'")
+                .add("email='" + email + "'")
+                .add("account=" + account)
+                .toString();
     }
 }

@@ -1,6 +1,6 @@
 package order.domain.invoice;
 
-import account.domain.address.Address;
+import order.domain.account.Address;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface InvoiceRepository extends PagingAndSortingRepository<Invoice, String> {

@@ -10,13 +10,7 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import product.api.ProductCreateCommand;
-import product.api.ProductCreatedEvent;
-import product.api.ProductDeleteCommand;
-import product.api.ProductDeletedEvent;
-import product.api.ProductStatus;
-import product.api.ProductStatusChangeCommand;
-import product.api.ProductStatusChangedEvent;
+import product.api.*;
 
 @Aggregate
 public class Product {
@@ -27,7 +21,7 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
-    private Integer quantity;
+    private Long quantity;
     private ProductStatus status;
 
     @CommandHandler
@@ -50,6 +44,24 @@ public class Product {
     public void handle(ProductDeleteCommand cmd) {
         log.debug("ProductDeleteCommand {}", cmd);
         apply(new ProductDeletedEvent(id));
+    }
+
+    @CommandHandler
+    public void handle(ProductQuantityMinusCommand cmd) {
+        if (cmd.getQuantity() < 0) {
+            throw new IllegalArgumentException("negative parameter is illegal");
+        }
+
+        apply(new ProductQuantityMinusCommand(cmd.getId(), cmd.getQuantity()));
+    }
+
+    @CommandHandler
+    public void handle(ProductQuantityPlusCommand cmd) {
+        if (cmd.getQuantity() < 0) {
+            throw new IllegalArgumentException("negative parameter is illegal");
+        }
+
+        apply(new ProductQuantityPlusCommand(cmd.getId(), cmd.getQuantity()));
     }
 
     @EventSourcingHandler
@@ -80,6 +92,26 @@ public class Product {
         }
 
         AggregateLifecycle.markDeleted();
+    }
+
+    @EventSourcingHandler
+    public void on(ProductQuantityDeductedEvent evt) {
+        if (log.isDebugEnabled()) {
+            log.debug("ProductQuantityDeductedEvent {}", evt);
+        }
+
+        long finalQuantity = quantity - evt.getQuantity();
+        finalQuantity = finalQuantity < 0 ? 0 : finalQuantity;
+        quantity = finalQuantity;
+    }
+
+    @EventSourcingHandler
+    public void on(ProductQuantityIncreasedEvent evt) {
+        if (log.isDebugEnabled()) {
+            log.debug("ProductQuantityIncreasedEvent {}", evt);
+        }
+
+        quantity = quantity + evt.getQuantity();
     }
 
     public Product() {

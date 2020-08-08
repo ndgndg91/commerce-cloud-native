@@ -12,6 +12,10 @@ data class ProductStatusChangeCommand(@TargetAggregateIdentifier val id: Long, v
 data class ProductStatusChangedEvent(val id: Long, val status: ProductStatus)
 data class ProductDeleteCommand(@TargetAggregateIdentifier val id: Long)
 data class ProductDeletedEvent(val id: Long)
+data class ProductQuantityMinusCommand(val id: Long, val quantity: Long)
+data class ProductQuantityDeductedEvent(val id : Long, val quantity: Long)
+data class ProductQuantityPlusCommand(val id: Long, val quantity: Long)
+data class ProductQuantityIncreasedEvent(val id : Long, val quantity: Long)
 
 enum class ProductStatus() { PUBLIC, PRIVATE, SOLD_OUT }
 

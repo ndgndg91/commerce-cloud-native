@@ -83,5 +83,4 @@ public class OrderService {
         lineItem.calculateTax(taxRate);
         return lineItem;
     }
-
 }

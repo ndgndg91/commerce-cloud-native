@@ -12,3 +12,6 @@ spring:
 logging:
   level:
     product: debug
+
+server:
+  port: 3030

@@ -4,6 +4,7 @@ public final class ProductCreateRequest{
     private long id;
     private String name;
     private Double price;
+    private Integer quantity;
     private String status;
 
     public Long getId() {
@@ -16,6 +17,10 @@ public final class ProductCreateRequest{
 
     public Double getPrice() {
         return price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public String getStatus() {

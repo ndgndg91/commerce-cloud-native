@@ -11,6 +11,7 @@ import product.request.ProductCreateRequest;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -33,6 +34,7 @@ public class ProductController {
                         request.getId(),
                         request.getName(),
                         request.getPrice(),
+                        request.getQuantity(),
                         ProductStatus.valueOf(request.getStatus())
                 )
         );
@@ -49,6 +51,22 @@ public class ProductController {
                 )
         );
         return Mono.empty();
+    }
+
+    @GetMapping("/products/{id}")
+    public Mono<ProductSummary> findProductById(
+            @PathVariable long id
+    ){
+
+        ByIdProductQuery byIdProductQuery = new ByIdProductQuery(id);
+
+        SubscriptionQueryResult<Optional<ProductSummary>, ProductSummary> byIdQueryResult = queryGateway.subscriptionQuery(byIdProductQuery,
+                ResponseTypes.optionalInstanceOf(ProductSummary.class),
+                ResponseTypes.instanceOf(ProductSummary.class)
+        );
+
+        Mono<Optional<ProductSummary>> optionalMono = byIdQueryResult.initialResult();
+        return optionalMono.map(Optional::orElseThrow);
     }
 
     @GetMapping("/products")

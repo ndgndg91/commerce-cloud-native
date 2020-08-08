@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
+
 
 @Service
 public class OrderService {
@@ -34,11 +36,10 @@ public class OrderService {
         this.invoiceRepository = invoiceRepository;
     }
 
+    @Transactional
     public void order(){
-        ResponseEntity<Customer> exchange = restTemplate.exchange("http://127.0.0.1:1010/customers/1",
-                HttpMethod.GET, null, Customer.class);
 
-        Customer customer = exchange.getBody();
+        Customer customer = getCustomer(1);
         log.info("{}", customer);
 
         assert customer != null;
@@ -46,13 +47,15 @@ public class OrderService {
         String accountNumber = customer.getAccount().getAccountNumber();
         Order order = new Order(accountNumber, address);
 
-        LineItem bce = new LineItem("Best. Cloud. Ever. (T-Shirt, Men's Large)", "SKU-24642", 1, 21.99, .06);
-        order.addLineItem(bce);
-        LineItem wgn = new LineItem("We're gonna need a bigger VM (T-Shirt, Women's Small)", "SKU-12464", 4,
-                13.99, .06);
-        order.addLineItem(wgn);
-        LineItem cpa = new LineItem("cf push awesome (Hoodie, Men's Medium)", "SKU-64233", 2, 21.99, .06);
-        order.addLineItem(cpa);
+        LineItem firstLineItem = getLineItem(1, 5);
+        log.info("{}", firstLineItem);
+        order.addLineItem(firstLineItem);
+
+        LineItem secondLineItem = getLineItem(2, 10);
+        order.addLineItem(secondLineItem);
+
+        LineItem thirdLineItem = getLineItem(3, 20);
+        order.addLineItem(thirdLineItem);
 
         order = orderRepository.save(order);
         log.info("{}", order);
@@ -62,6 +65,23 @@ public class OrderService {
         invoice = invoiceRepository.save(invoice);
 
         log.info("{}", invoice);
+    }
+
+    private Customer getCustomer(long id) {
+        ResponseEntity<Customer> customerResponseEntity = restTemplate.exchange("http://127.0.0.1:1010/customers/" + id,
+                HttpMethod.GET, null, Customer.class);
+
+        return customerResponseEntity.getBody();
+    }
+
+    private LineItem getLineItem(long id, double taxRate){
+        ResponseEntity<LineItem> exchange = restTemplate.exchange("http://127.0.0.1:3030/products/" + id,
+                HttpMethod.GET, null, LineItem.class);
+
+        LineItem lineItem = exchange.getBody();
+        assert lineItem != null;
+        lineItem.calculateTax(taxRate);
+        return lineItem;
     }
 
 }

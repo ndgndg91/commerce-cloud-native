@@ -1,23 +1,53 @@
-POST http://127.0.0.1:8080/products
+POST http://127.0.0.1:3030/products
 Content-Type: application/json
 
 {
   "id": "1",
   "name": "T-Shirts",
   "price": "10.99",
+  "quantity": "50",
   "status": "PUBLIC"
 }
 
 ###
+POST http://127.0.0.1:3030/products
+Content-Type: application/json
 
-GET http://127.0.0.1:8080/products?offset=0&limit=5
+{
+  "id": "2",
+  "name": "We're gonna need a bigger VM (T-Shirt, Women's Small)",
+  "price": "13.99",
+  "quantity": "50",
+  "status": "PUBLIC"
+}
+
+###
+POST http://127.0.0.1:3030/products
+Content-Type: application/json
+
+{
+  "id": "3",
+  "name": "cf push awesome (Hoodie, Men's Medium)",
+  "price": "21.99",
+  "quantity": "50",
+  "status": "PUBLIC"
+}
+
 
 ###
 
-PUT http://127.0.0.1:8080/products
+GET http://127.0.0.1:3030/products?offset=0&limit=5
+
+###
+
+PUT http://127.0.0.1:3030/products
 Content-Type: application/json
 
 {
   "id": "1",
   "status": "PRIVATE"
 }
+
+###
+
+GET http://127.0.0.1:3030/products/1

@@ -27,6 +27,7 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
+    private Integer quantity;
     private ProductStatus status;
 
     @CommandHandler
@@ -36,7 +37,7 @@ public class Product {
             throw new IllegalArgumentException("price <= 0");
         }
 
-        apply(new ProductCreatedEvent(cmd.getId(), cmd.getName(), cmd.getPrice(), cmd.getStatus()));
+        apply(new ProductCreatedEvent(cmd.getId(), cmd.getName(), cmd.getPrice(), cmd.getQuantity(), cmd.getStatus()));
     }
 
     @CommandHandler

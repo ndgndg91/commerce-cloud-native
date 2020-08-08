@@ -47,12 +47,14 @@ class OrderTest {
 
         //when
         Order order = new Order(account.getAccountNumber(), shippingAddress);
-        LineItem bce = new LineItem("Best. Cloud. Ever. (T-Shirt, Men's Large)", "SKU-24642", 1, 21.99, .06);
+        LineItem bce = new LineItem(1L,"Best. Cloud. Ever. (T-Shirt, Men's Large)",  21.99);
+        bce.calculateTax(10);
         order.addLineItem(bce);
-        LineItem wgn = new LineItem("We're gonna need a bigger VM (T-Shirt, Women's Small)", "SKU-12464", 4,
-            13.99, .06);
+        LineItem wgn = new LineItem(2L,"We're gonna need a bigger VM (T-Shirt, Women's Small)", 13.99);
+        wgn.calculateTax(10);
         order.addLineItem(wgn);
-        LineItem cpa = new LineItem("cf push awesome (Hoodie, Men's Medium)", "SKU-64233", 2, 21.99, .06);
+        LineItem cpa = new LineItem(3L, "cf push awesome (Hoodie, Men's Medium)", 21.99);
+        cpa.calculateTax(10);
         order.addLineItem(cpa);
 
         order = orderRepository.save(order);

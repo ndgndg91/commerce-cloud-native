@@ -4,46 +4,40 @@ import java.util.StringJoiner;
 
 public class LineItem {
 
+    private Long id;
     private String name;
-    private String productId;
-    private Integer quantity;
     private Double price;
     private Double tax;
 
-    public LineItem(String name, String productId, int quantity, double price, double tax) {
+    private LineItem(){}
+
+    public LineItem(Long productId, String name, double price) {
+        this.id = productId;
         this.name = name;
-        this.productId = productId;
-        this.quantity = quantity;
         this.price = price;
-        this.tax = tax;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
+    public Long getId() {
+        return id;
     }
 
     public Double getPrice() {
         return price;
     }
 
-    public Double getTax() {
-        return tax;
+    public void calculateTax(double percent){
+        this.tax = price * (percent/100);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", LineItem.class.getSimpleName() + "[", "]")
                 .add("name='" + name + "'")
-                .add("productId='" + productId + "'")
-                .add("quantity=" + quantity)
+                .add("id='" + id + "'")
                 .add("price=" + price)
                 .add("tax=" + tax)
                 .toString();

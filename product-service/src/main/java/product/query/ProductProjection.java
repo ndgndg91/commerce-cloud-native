@@ -10,10 +10,7 @@ import org.axonframework.queryhandling.QueryHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import product.api.FetchProductsQuery;
-import product.api.ProductCreatedEvent;
-import product.api.ProductStatusChangedEvent;
-import product.api.ProductSummary;
+import product.api.*;
 
 @Component
 public class ProductProjection {
@@ -47,5 +44,13 @@ public class ProductProjection {
         jpaQuery.setFirstResult(query.getOffset());
         jpaQuery.setMaxResults(query.getLimit());
         return jpaQuery.getResultList();
+    }
+
+    @QueryHandler
+    public ProductSummary handle(ByIdProductQuery query){
+        log.trace("handling {}", query);
+        TypedQuery<ProductSummary> jpaQuery = entityManager.createNamedQuery("ProductSummary.byId", ProductSummary.class);
+        jpaQuery.setParameter("id", query.getId());
+        return jpaQuery.getSingleResult();
     }
 }
